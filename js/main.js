@@ -115,16 +115,55 @@
   }
 
   // ==========================================================================
-  // 3. Hide the floating CTA while visitors use the calculator
+  // 3. Reveal compact CTA on scroll; keep calculator and open mobile menu clear
   function initFloatingCalculatorCTA() {
     const button = document.getElementById('floatingCalcCta');
     const calculator = document.getElementById('calculator');
-    if (!button || !calculator || !('IntersectionObserver' in window)) return;
+    const drawer = document.getElementById('mobileDrawer');
+    if (!button || !calculator) return;
 
-    const observer = new IntersectionObserver(function (entries) {
-      button.classList.toggle('is-hidden', entries[0].isIntersecting);
-    }, { rootMargin: '0px 0px -20% 0px', threshold: 0 });
-    observer.observe(calculator);
+    let calculatorIsVisible = false;
+    let ticking = false;
+
+    function updateButton() {
+      const menuOpen = drawer && drawer.classList.contains('active');
+      const shouldShow = window.scrollY > 220 && !calculatorIsVisible && !menuOpen;
+      button.classList.toggle('is-visible', shouldShow);
+    }
+
+    function scheduleUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        updateButton();
+      });
+    }
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(function (entries) {
+        calculatorIsVisible = entries[0].isIntersecting;
+        scheduleUpdate();
+      }, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
+      observer.observe(calculator);
+    } else {
+      // Fallback for older browsers without IntersectionObserver
+      const updateCalculatorVisibility = function () {
+        const bounds = calculator.getBoundingClientRect();
+        calculatorIsVisible = bounds.top < window.innerHeight * 0.85 && bounds.bottom > 0;
+        scheduleUpdate();
+      };
+      window.addEventListener('scroll', updateCalculatorVisibility, { passive: true });
+      window.addEventListener('resize', updateCalculatorVisibility);
+      updateCalculatorVisibility();
+    }
+
+    const menuButton = document.getElementById('btnMobileMenu');
+    const menuClose = document.getElementById('btnMobileClose');
+    if (menuButton) menuButton.addEventListener('click', scheduleUpdate);
+    if (menuClose) menuClose.addEventListener('click', scheduleUpdate);
+    updateButton();
   }
 
   // 4. Portfolio Filter System
