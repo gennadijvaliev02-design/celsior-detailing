@@ -18,7 +18,7 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem; /* 80px sticky header clearance */
+  scroll-padding-top: 0; /* Header scrolls with the document */
   -webkit-text-size-adjust: 100%;
   color-scheme: dark;
   background-color: var(--color-bg-primary);
