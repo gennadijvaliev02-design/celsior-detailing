@@ -1,6 +1,6 @@
 /**
  * Celsior Detailing — Main Application Logic
- * Mobile Drawer, Smooth Anchor Scrolling, Sticky Header State, Portfolio Filtering & Live Studio Hours
+ * Mobile Drawer, Smooth Anchor Scrolling, Floating Calculator CTA, Portfolio Filtering & Live Studio Hours
  * Strict Zero-Emoji Architecture
  */
 
@@ -86,41 +86,10 @@
   }
 
   // ==========================================================================
-  // 2. Sticky Header Scroll State
-  // ==========================================================================
-  function initStickyHeader() {
-    const header = document.getElementById('siteHeader');
-    if (!header) return;
-
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    function onScroll() {
-      lastScrollY = window.scrollY;
-      if (!ticking) {
-        window.requestAnimationFrame(function () {
-          if (lastScrollY > 20) {
-            header.classList.add('header-scrolled');
-          } else {
-            header.classList.remove('header-scrolled');
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-
-  // ==========================================================================
-  // 3. Smooth Anchor Navigation with Sticky Header Offset
+  // 2. Smooth Anchor Navigation (no sticky header offset)
   // ==========================================================================
   function initSmoothScroll() {
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    const header = document.getElementById('siteHeader');
-
     anchorLinks.forEach(function (anchor) {
       anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
@@ -129,9 +98,7 @@
         const targetEl = document.querySelector(targetId);
         if (targetEl) {
           e.preventDefault();
-          const headerHeight = header ? header.offsetHeight : 76;
-          const elementPosition = targetEl.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+          const offsetPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
 
           window.scrollTo({
             top: offsetPosition,
@@ -148,6 +115,18 @@
   }
 
   // ==========================================================================
+  // 3. Hide the floating CTA while visitors use the calculator
+  function initFloatingCalculatorCTA() {
+    const button = document.getElementById('floatingCalcCta');
+    const calculator = document.getElementById('calculator');
+    if (!button || !calculator || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(function (entries) {
+      button.classList.toggle('is-hidden', entries[0].isIntersecting);
+    }, { rootMargin: '0px 0px -20% 0px', threshold: 0 });
+    observer.observe(calculator);
+  }
+
   // 4. Portfolio Filter System
   // ==========================================================================
   function initPortfolioFilters() {
@@ -217,8 +196,8 @@
     document.documentElement.classList.add('js');
 
     initMobileDrawer();
-    initStickyHeader();
     initSmoothScroll();
+    initFloatingCalculatorCTA();
     initPortfolioFilters();
     initStudioHours();
   }
