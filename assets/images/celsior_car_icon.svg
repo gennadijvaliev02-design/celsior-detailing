@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50" fill="none">
+  <!-- Sweeping Roofline -->
+  <path d="M 52 18 C 66 6, 94 4, 122 13 C 134 17, 146 22, 152 20" 
+        fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        
+  <!-- Dynamic Shoulder & Beltline -->
+  <path d="M 12 35 C 24 30, 38 28, 66 27 C 94 26, 120 23, 148 24 C 153 24, 158 22, 152 20 C 142 21, 120 20, 95 22 C 58 24, 32 28, 18 33 Z" 
+        fill="currentColor"/>
+
+  <!-- Front Nose Splitter Scoop -->
+  <path d="M 12 35 C 6 37, 1 39, 5 38 C 9 37, 15 35, 21 34" 
+        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Ground Clearance Accent Stroke -->
+  <line x1="56" y1="39" x2="110" y2="39" 
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
