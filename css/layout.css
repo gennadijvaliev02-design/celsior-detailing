@@ -68,102 +68,86 @@ section {
 }
 
 
-/* Floating calculator shortcut — premium Celsior glass/steel finish */
+/* Floating calculator CTA — compact, discreet pill in the spirit of G-SKIN */
 .floating-calc-cta {
   position: fixed;
-  right: clamp(16px, 3vw, 40px);
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  right: 22px;
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
   z-index: calc(var(--z-drawer) - 10);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  min-height: 58px;
-  padding: 9px 17px 9px 9px;
-  border: 1px solid rgba(109, 208, 241, 0.55);
+  gap: 11px;
+  max-width: calc(100vw - 36px);
+  min-height: 46px;
+  padding: 12px 19px;
+  border: 1px solid rgba(180, 223, 235, 0.32);
   border-radius: 999px;
-  background: linear-gradient(125deg, rgba(35, 47, 57, 0.98), rgba(11, 17, 23, 0.98));
-  color: #f2f7fc;
-  text-decoration: none;
-  font: 700 0.875rem/1.2 var(--font-sans);
+  background: rgba(22, 31, 35, 0.94);
+  color: #edf3f4;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.25;
   letter-spacing: 0.01em;
+  text-decoration: none;
   white-space: nowrap;
-  box-shadow: 0 15px 38px rgba(0, 0, 0, 0.5), 0 0 26px rgba(56, 189, 248, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.13);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  transition: opacity 240ms ease, transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease, visibility 240ms ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.34);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 280ms ease, visibility 280ms ease, transform 280ms ease,
+              border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.floating-calc-cta.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.floating-calc-cta__dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #b4dfeb;
+  box-shadow: 0 0 11px rgba(180, 223, 235, 0.45);
 }
 
 .floating-calc-cta:hover {
-  color: #ffffff;
-  transform: translateY(-3px);
-  border-color: rgba(156, 225, 247, 0.95);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.55), 0 0 34px rgba(56, 189, 248, 0.3);
+  background: rgba(31, 44, 50, 0.98);
+  color: #fff;
+  border-color: rgba(180, 223, 235, 0.7);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.floating-calc-cta.is-visible:hover {
+  transform: translateY(-2px);
 }
 
 .floating-calc-cta:focus-visible {
-  outline: 3px solid #9cdef5;
+  outline: 2px solid #b4dfeb;
   outline-offset: 4px;
-}
-
-.floating-calc-cta__icon {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  border-radius: 50%;
-  color: #d1f4ff;
-  background: linear-gradient(145deg, rgba(56, 189, 248, 0.3), rgba(56, 189, 248, 0.09));
-  border: 1px solid rgba(149, 224, 251, 0.34);
-}
-
-.floating-calc-cta__icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.floating-calc-cta__arrow {
-  display: grid;
-  place-items: center;
-  color: #9fe6fb;
-}
-
-.floating-calc-cta__arrow svg {
-  width: 18px;
-  height: 18px;
-  transition: transform 240ms ease;
-}
-
-.floating-calc-cta:hover .floating-calc-cta__arrow svg {
-  transform: translateX(3px);
-}
-
-.floating-calc-cta.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(12px);
-  pointer-events: none;
 }
 
 @media (max-width: 600px) {
   .floating-calc-cta {
-    left: 50%;
-    right: auto;
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    width: min(340px, calc(100vw - 32px));
-    justify-content: space-between;
-    min-height: 56px;
-    font-size: 0.875rem;
-    transform: translateX(-50%);
+    right: 18px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    min-height: 44px;
+    padding: 12px 18px;
+    font-size: 0.72rem;
   }
+}
 
-  .floating-calc-cta:hover {
-    transform: translateX(-50%) translateY(-3px);
-  }
-
-  .floating-calc-cta.is-hidden {
-    transform: translateX(-50%) translateY(12px);
+@media (prefers-reduced-motion: reduce) {
+  .floating-calc-cta {
+    transition: none;
   }
 }
 
